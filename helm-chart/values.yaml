@@ -1,0 +1,99 @@
+goUrl:
+    affinity: {}
+    fullnameOverride: ""
+    image:
+        imagePullSecrets: gitcloud-cr
+        pullPolicy: Always
+        repository: gitcloud-cr.ert.com/checkelmann/go-url
+        tag: b89abf88
+    ingress:
+        annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8, 172.20.0.0/16
+        enabled: true
+        hosts:
+            -
+                host: go.ny-it-test.k8s.ert.com
+                paths: []
+        tls: []
+    nameOverride: ""
+    nodeSelector: {}
+    replicaCount: 1
+    resources:
+        limits:
+            cpu: 100m
+            memory: 128Mi
+        requests:
+            cpu: 10m
+            memory: 5Mi
+    service:
+        name: go-url
+        port: 80
+        type: ClusterIP
+    tolerations: []
+goUrlBlue:
+    affinity: {}
+    fullnameOverride: ""
+    image:
+        imagePullSecrets: gitcloud-cr
+        pullPolicy: Always
+        repository: gitcloud-cr.ert.com/checkelmann/go-url
+        tag: b89abf88
+    ingress:
+        annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8, 172.20.0.0/16
+        enabled: true
+        hosts:
+            -
+                host: go-blue.ny-it-test.k8s.ert.com
+                paths: []
+        tls: []
+    nameOverride: ""
+    nodeSelector: {}
+    replicaCount: 1
+    resources:
+        limits:
+            cpu: 100m
+            memory: 128Mi
+        requests:
+            cpu: 10m
+            memory: 5Mi
+    service:
+        name: go-url-blue
+        port: 80
+        type: ClusterIP
+    tolerations: []
+goUrlGreen:
+    affinity: {}
+    fullnameOverride: ""
+    image:
+        imagePullSecrets: gitcloud-cr
+        pullPolicy: Always
+        repository: gitcloud-cr.ert.com/checkelmann/go-url
+        tag: b89abf88
+    ingress:
+        annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8, 172.20.0.0/16
+        enabled: true
+        hosts:
+            -
+                host: go-blue.ny-it-test.k8s.ert.com
+                paths: []
+        tls: []
+    nameOverride: ""
+    nodeSelector: {}
+    replicaCount: 1
+    resources:
+        limits:
+            cpu: 100m
+            memory: 128Mi
+        requests:
+            cpu: 10m
+            memory: 5Mi
+    service:
+        name: go-url-green
+        port: 80
+        type: ClusterIP
+    tolerations: []

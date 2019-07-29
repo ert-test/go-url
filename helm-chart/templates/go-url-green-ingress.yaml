@@ -1,0 +1,26 @@
+{{- if .Values.goUrl.ingress.enabled -}}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ include "go-url.name" . }}
+  {{- with .Values.goUrl.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  rules:  
+  - host: go
+    http: &http_rules
+      paths:
+      - path:
+        backend:
+          serviceName: {{ include "go-url.name" . }}
+          servicePort: {{ .Values.goUrl.service.port }}
+  {{- range .Values.goUrl.ingress.hosts }}
+  - host: {{ .host }}
+    http: *http_rules
+  {{- end -}}
+{{- end -}}
+
+

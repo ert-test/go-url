@@ -1,0 +1,89 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "go-url.name" . }}
+  annotations:
+    app.gitlab.com/env: test-it 
+    app.gitlab.com/app: checkelmann-go-url
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      annotations:
+        CI_JOB_ID: "39114"
+        app.gitlab.com/env: test-it 
+        app.gitlab.com/app: checkelmann-go-url
+      labels:
+        app: {{ .Chart.Name }}
+        version: 1.0.0
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.goUrl.image.repository }}:{{ .Values.goUrl.image.tag }}"
+          volumeMounts:
+          - name: data
+            mountPath: "/data"
+          ports:
+            - containerPort: 8067
+          imagePullPolicy: {{ .Values.goUrl.image.pullPolicy }}
+          readinessProbe:
+            httpGet:
+              path: /edit/
+              port: 8067
+            initialDelaySeconds: 10
+            periodSeconds: 10              
+          livenessProbe:
+            httpGet:
+              path: /edit/
+              port: 8067
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 2
+          resources:
+            requests:
+              memory: "{{ .Values.goUrl.resources.requests.memory }}"
+              cpu: "{{ .Values.goUrl.resources.requests.cpu }}"
+            limits:
+              memory: "{{ .Values.goUrl.resources.limits.memory }}"
+              cpu: "{{ .Values.goUrl.resources.limits.cpu }}"
+          env:
+            - name: VERSION
+              value: 1.0.0
+            - name: DT_TAGS
+              value: "application={{ .Chart.Name }}"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: "metadata.name"
+            - name: DEPLOYMENT_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: "metadata.labels['deployment']"
+            - name: CONTAINER_IMAGE
+              value: "{{ .Values.goUrl.image.repository }}:{{ .Values.goUrl.image.tag }}"
+            - name: KEPTN_PROJECT
+              value: "{{ .Chart.Name }}"
+            - name: KEPTN_STAGE
+              valueFrom:
+                fieldRef:
+                  fieldPath: "metadata.namespace"
+            - name: KEPTN_SERVICE
+              value: "{{ .Values.goUrl.service.name }}"
+      {{- if .Values.goUrl.image.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.goUrl.image.imagePullSecrets }}
+      {{- end }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ include "go-url.name" . }}

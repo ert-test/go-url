@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: go-url-go-url-staging-destination
+spec:
+  host: go-url.go-url-staging.svc.cluster.local
+  subsets:
+  - name: blue
+    labels:
+      deployment: go-url-blue
+  - name: green
+    labels:
+      deployment: go-url-green

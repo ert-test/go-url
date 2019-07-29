@@ -9,7 +9,7 @@ goUrl:
     imageCredentials:
         registry: gitcloud-cr.ert.com
         username: xyz
-        password: ultrasecret        
+        password: ultrasecret
     ingress:
         annotations:
             kubernetes.io/ingress.class: traefik

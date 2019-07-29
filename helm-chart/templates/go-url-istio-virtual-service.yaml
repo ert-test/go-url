@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: go-url-dev-go-url
+spec:
+  hosts:
+  - "go-url.go-url-dev.10.15.130.21.xip.io"
+  gateways:
+  - go-url-dev-gateway
+  http:
+    - route:
+      - destination:
+          host: go-url.go-url-dev.svc.cluster.local

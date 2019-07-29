@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "go-url.name" . }}
+  labels:
+    name: go-url
+spec:
+  clusterIP: None
+  ports:
+  - name: http
+    port: {{ .Values.goUrl.service.port }}
+    protocol: TCP
+    targetPort: 8067
+  selector:
+    app: {{ .Chart.Name }}
+  type: ClusterIP    

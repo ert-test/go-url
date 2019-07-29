@@ -6,10 +6,10 @@ goUrl:
         pullPolicy: Always
         repository: gitcloud-cr.ert.com/checkelmann/go-url
         tag: b89abf88
-    imageCredentials:
-        registry: gitcloud-cr.ert.com
-        username: xyz
-        password: ultrasecret
+    #imageCredentials:
+    #    registry: gitcloud-cr.ert.com
+    #    username: xyz
+    #    password: ultrasecret
     ingress:
         annotations:
             kubernetes.io/ingress.class: traefik

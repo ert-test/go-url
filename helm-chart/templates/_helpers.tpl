@@ -24,10 +24,10 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 
-# Create Image Pull Secrets
-#{{- define "imagePullSecret" }}
-#{{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\"}}}" .Values.goUrl.imageCredentials.registry (printf "%s:%s" .Values.goUrl.imageCredentials.username .Values.goUrl.imageCredentials.password | b64enc) | b64enc }}
-#{{- end }}
+{{/* Create Image Pull Secrets
+{{- define "imagePullSecret" }}
+{{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\"}}}" .Values.goUrl.imageCredentials.registry (printf "%s:%s" .Values.goUrl.imageCredentials.username .Values.goUrl.imageCredentials.password | b64enc) | b64enc }}
+{{- end }}*/}}
 
 {{/*
 Create chart name and version as used by the chart label.
